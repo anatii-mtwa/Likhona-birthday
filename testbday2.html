@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 19th Birthday!</title>
+    
+    <!-- Swiper.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --light-blue: #E0F2FE;
+            --mid-blue: #BAE6FD;
+            --dark-blue: #0284C7;
+            --glass-bg: rgba(255, 255, 255, 0.6);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            /* Your local background image */
+            background-image: url('your-image-name.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            color: #333;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #landing-page {
+            text-align: center;
+            padding: 2rem;
+            width: 90%;
+            max-width: 400px;
+            transition: opacity 0.5s ease;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .hidden {
+            display: none !important;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        button {
+            background-color: var(--dark-blue);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        #login-section {
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--mid-blue);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        /* Fixed Container Layout */
+        #app-container {
+            width: 100%;
+            height: 100vh; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-top: 10px;
+        }
+
+        /* BIGGER SWIPER CONTAINER */
+        .swiper {
+            width: 95%; /* Takes up more of the mobile screen width */
+            max-width: 450px; 
+            height: 80vh; /* Taller area for the cards to rotate inside */
+        }
+
+        .swiper-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 10px;
+            width: 100%;
+            border-radius: 20px;
+        }
+
+        /* BIGGER IMAGE */
+        .image-container {
+            width: 100%;
+            height: 65vh; /* Increased from 55vh to 65vh */
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            background-color: var(--mid-blue);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .text-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: -40px; /* Pulls text box up over the image a bit more */
+            width: 95%; /* Wider text box */
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.8);
+            z-index: 10;
+        }
+
+        .text-card p {
+            font-size: 1.05rem; /* Slightly larger text */
+            font-weight: 600;
+            color: #111;
+        }
+
+        .slide-counter {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Instructions */
+        .instructions-container {
+            text-align: center; 
+            padding: 10px 10px 20px 10px; 
+            color: white; 
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8); 
+            z-index: 100;
+            width: 100%;
+        }
+
+        .instructions-main {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .instructions-sub {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Audio Element -->
+    <audio id="hbd-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+
+    <div id="landing-page">
+        <h1 style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.2); margin-bottom: 10px;">Hey there! 👋</h1>
+        <p style="margin-bottom: 20px; color: white; text-shadow: 0 1px 3px rgba(0,0,0,0.2);">Turn your volume up before we begin.</p>
+        
+        <button id="play-btn">Play Song & Start</button>
+
+        <div id="login-section" class="hidden">
+            <input type="text" id="name-input" placeholder="Enter your name to unlock..." autocomplete="off">
+            <button id="enter-btn">Unlock</button>
+            <p id="error-msg" style="color: #ff4d4d; font-weight: 600; font-size: 0.9rem; margin-top: 10px; display: none;">Wrong name! Try again.</p>
+        </div>
+    </div>
+
+    <div id="app-container" class="hidden">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper" id="swiper-wrapper">
+                <!-- Slides injected here -->
+            </div>
+        </div>
+
+        <div class="instructions-container">
+            <p class="instructions-main">Swipe left & right ↔️</p>
+            <p class="instructions-sub">(Wait for the song to play)</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+    <script>
+        const HER_NAME = "Sarah"; 
+        
+        const testAudio1 = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3";
+        const testAudio2 = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3";
+        
+        const memoryData = [
+            { img: "https://picsum.photos/400/600?random=1", audio: testAudio1, text: "1. You always know how to make me laugh!" },
+            { img: "https://picsum.photos/400/600?random=2", audio: testAudio2, text: "2. Because you give the best advice." },
+            { img: "https://picsum.photos/400/600?random=3", audio: testAudio1, text: "3. I love our late night conversations." },
+            { img: "https://picsum.photos/400/600?random=4", audio: testAudio2, text: "4. You're the most loyal friend I know." },
+            { img: "https://picsum.photos/400/600?random=5", audio: testAudio1, text: "5. You never judge me." },
+            { img: "https://picsum.photos/400/600?random=6", audio: testAudio2, text: "6. Your taste in music is elite." },
+            { img: "https://picsum.photos/400/600?random=7", audio: testAudio1, text: "7. You hype me up when I need it most." },
+            { img: "https://picsum.photos/400/600?random=8", audio: testAudio2, text: "8. We share the best inside jokes." },
+            { img: "https://picsum.photos/400/600?random=9", audio: testAudio1, text: "9. You are incredibly strong." },
+            { img: "https://picsum.photos/400/600?random=10", audio: testAudio2, text: "10. You always support my crazy ideas." },
+            { img: "https://picsum.photos/400/600?random=11", audio: testAudio1, text: "11. You light up every room you walk into." },
+            { img: "https://picsum.photos/400/600?random=12", audio: testAudio2, text: "12. Because you share your food with me." },
+            { img: "https://picsum.photos/400/600?random=13", audio: testAudio1, text: "13. You're an amazing listener." },
+            { img: "https://picsum.photos/400/600?random=14", audio: testAudio2, text: "14. We always have an adventure together." },
+            { img: "https://picsum.photos/400/600?random=15", audio: testAudio1, text: "15. You inspire me to be better." },
+            { img: "https://picsum.photos/400/600?random=16", audio: testAudio2, text: "16. You have the best style." },
+            { img: "https://picsum.photos/400/600?random=17", audio: testAudio1, text: "17. You remember the little things." },
+            { img: "https://picsum.photos/400/600?random=18", audio: testAudio2, text: "18. Because you're unapologetically yourself." },
+            { img: "https://picsum.photos/400/600?random=19", audio: testAudio1, text: "19. Happy 19th! Here is to a lifetime of friendship!" }
+        ];
+
+        const playBtn = document.getElementById('play-btn');
+        const loginSection = document.getElementById('login-section');
+        const nameInput = document.getElementById('name-input');
+        const enterBtn = document.getElementById('enter-btn');
+        const errorMsg = document.getElementById('error-msg');
+        const landingPage = document.getElementById('landing-page');
+        const appContainer = document.getElementById('app-container');
+        const hbdAudio = document.getElementById('hbd-audio');
+        const swiperWrapper = document.getElementById('swiper-wrapper');
+
+        let currentTrack = null;
+
+        playBtn.addEventListener('click', () => {
+            hbdAudio.play().catch(e => console.log("Audio play failed:", e));
+            playBtn.classList.add('hidden');
+            loginSection.classList.remove('hidden');
+        });
+
+        enterBtn.addEventListener('click', checkName);
+        nameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkName();
+        });
+
+        function checkName() {
+            if (nameInput.value.trim().toLowerCase() === HER_NAME.toLowerCase()) {
+                startExperience();
+            } else {
+                errorMsg.style.display = "block";
+            }
+        }
+
+        function startExperience() {
+            landingPage.classList.add('hidden');
+            appContainer.classList.remove('hidden');
+            hbdAudio.pause();
+            hbdAudio.currentTime = 0;
+
+            memoryData.forEach((item, index) => {
+                const slideHTML = `
+                    <div class="swiper-slide">
+                        <div class="slide-counter">${index + 1} / 19</div>
+                        <div class="image-container">
+                            <img src="${item.img}" alt="Memory ${index + 1}">
+                        </div>
+                        <div class="text-card">
+                            <p>${item.text}</p>
+                        </div>
+                    </div>
+                `;
+                swiperWrapper.innerHTML += slideHTML;
+            });
+
+            // UPDATED: Tinder-style cards effect
+            const swiper = new Swiper('.mySwiper', {
+                effect: 'cards',
+                grabCursor: true,
+                cardsEffect: {
+                    slideShadows: true, // Creates a cool depth shadow behind the cards
+                },
+                on: {
+                    init: function () {
+                        playSlideAudio(0); 
+                    },
+                    slideChange: function () {
+                        playSlideAudio(this.activeIndex); 
+                    }
+                }
+            });
+        }
+
+        function playSlideAudio(index) {
+            if (currentTrack) {
+                currentTrack.pause();
+                currentTrack.currentTime = 0;
+            }
+            const audioFile = memoryData[index].audio;
+            currentTrack = new Audio(audioFile);
+            currentTrack.play().catch(e => console.log("Auto-play prevented by browser for slide " + index, e));
+        }
+    </script>
+</body>
+</html>
