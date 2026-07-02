@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 19th Birthday!</title>
+    
+    <!-- Swiper.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --light-blue: #E0F2FE;
+            --mid-blue: #BAE6FD;
+            --dark-blue: #0284C7;
+            --glass-bg: rgba(255, 255, 255, 0.6);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            /* 1. New Image Background */
+            background-image: url('../LP/img20.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            color: #333;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #landing-page {
+            text-align: center;
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            transition: opacity 0.5s ease;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .hidden {
+            display: none !important;
+            opacity: 0;
+        }
+
+        button {
+            background-color: var(--dark-blue);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        #login-section {
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--mid-blue);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        /* Fixed Container Layout */
+        #app-container {
+            width: 100%;
+            height: 100vh; 
+            max-width: 500px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Restricting Swiper height so it doesn't push the text off-screen */
+        .swiper {
+            width: 100%;
+            height: 75vh; 
+        }
+
+        .swiper-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .image-container {
+            width: 100%;
+            height: 55vh;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            background-color: var(--mid-blue);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .text-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: -30px; 
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.8);
+            z-index: 10;
+        }
+
+        .slide-counter {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--glass-bg);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            z-index: 100;
+        }
+
+        /* 2. New Instructions Styles placed safely outside Swiper */
+        .instructions-container {
+            text-align: center; 
+            padding: 10px; 
+            color: white; 
+            text-shadow: 0 2px 8px rgba(0,0,0,0.7); 
+            z-index: 100;
+            width: 100%;
+        }
+
+        .instructions-main {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .instructions-sub {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="hbd-audio" src="../LS/happy_birthday.mp3"></audio>
+
+    <div id="landing-page">
+        <h1 style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.2); margin-bottom: 10px;">Hey there! 👋</h1>
+        <p style="margin-bottom: 20px; color: white; text-shadow: 0 1px 3px rgba(0,0,0,0.2);">Turn your volume up before we begin.</p>
+        
+        <button id="play-btn">Play Song & Start</button>
+
+        <div id="login-section" class="hidden">
+            <input type="text" id="name-input" placeholder="Enter your name to unlock..." autocomplete="off">
+            <button id="enter-btn">Unlock</button>
+            <p id="error-msg" style="color: #ff4d4d; font-weight: 600; font-size: 0.9rem; margin-top: 10px; display: none;">Wrong name! Try again.</p>
+        </div>
+    </div>
+
+    <div id="app-container" class="hidden">
+        <!-- Swiper stays completely focused on the slides -->
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper" id="swiper-wrapper">
+                <!-- Slides injected here -->
+            </div>
+        </div>
+
+        <!-- 3. Instructions are now safely placed outside of Swiper's control -->
+        <div class="instructions-container">
+            <p class="instructions-main">Swipe left & right ↔️</p>
+            <p class="instructions-sub">(Wait for the song to play)</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+    <script>
+        const HER_NAME = "Likhona"; 
+        
+        const memoryData = [
+            { img: "../LP/img1.jpg", audio: "../LS/song6.mp3", text: "1. HAPPY HAPPY BIRTHDAY NTWANA YA,!" },
+            { img: "../LP/img2.jpg", audio: "../LS/song2.mp3", text: "2. BEST PERSON I COULD EVER ASK FOR IN MY LIFE." },
+            { img: "../LP/img3.jpg", audio: "../LS/song3.mp3", text: "3. YOU MAKE ME HAPPY." },
+            { img: "../LP/img4.jpg", audio: "../LS/song4.mp3", text: "4. YOU CHERISH FRIENDSHIP." },
+            { img: "../LP/img5.jpg", audio: "../LS/song19.mp3", text: "5. BECAUSE WE LOVE YOU TO PIECES." },
+            { img: "../LP/img6.jpg", audio: "../LS/song1.mp3", text: "6. LOW-KEY HELPED ME MOVE ON (SUSAN=T)." },
+            { img: "../LP/img7.jpg", audio: "../LS/song7.mp3", text: "7. ONE OF MY BIGGEST HYPEMANS." },
+            { img: "../LP/img8.jpg", audio: "../LS/song9.mp3", text: "8. WE SHARE THE BEST INSIDE JOKES." },
+            { img: "../LP/img9.jpg", audio: "../LS/song10.mp3", text: "9. YOUR LOUD LAUGH MAKES MY DAY IDWL." },
+            { img: "../LP/img10.jpg", audio: "../LS/song8.mp3", text: "10. WE LOVE YOU." },
+            { img: "../LP/img11.jpg", audio: "../LS/song11.mp3", text: "11. You light up every room you walk into." },
+            { img: "../LP/img12.jpg", audio: "../LS/song15.mp3", text: "12. UHLEKA NJE UFUNA UTYWALA." },
+            { img: "../LP/img13.jpg", audio: "../LS/song13.mp3", text: "13. YOU MAKE ME FEEL SEEN." },
+            { img: "../LP/img14.jpg", audio: "../LS/song14.mp3", text: "14. BEING A BIG BROTHER NEVER FELT SO HARD AND EASY AT THE SAME TIME." },
+            { img: "../LP/img15.jpg", audio: "../LS/song5.mp3", text: "15. YOU INSPIRE ME TO BE BETTER." },
+            { img: "../LP/img16.jpg", audio: "../LS/song17.mp3", text: "16. YOUR ENERGY IS THE GREATEST THING ABOUT YOU." },
+            { img: "../LP/img17.jpg", audio: "../LS/song16.mp3", text: "17. TATAKHO NGUTATAM NAYE, THANKS TO HIM I HAVE A STUBBORN LITTLE SISTER." },
+            { img: "../LP/img18.jpg", audio: "../LS/song18.mp3", text: "18. BECAUSE YOU'RE UNAPOLOGETICALLY YOURSELF." },
+            { img: "../LP/img19.jpg", audio: "../LS/song12.mp3", text: "19. Happy 19th! Here is to a lifetime of friendship!ENJOY YOUR DAY FRWEND" }
+        ];
+
+        const playBtn = document.getElementById('play-btn');
+        const loginSection = document.getElementById('login-section');
+        const nameInput = document.getElementById('name-input');
+        const enterBtn = document.getElementById('enter-btn');
+        const errorMsg = document.getElementById('error-msg');
+        const landingPage = document.getElementById('landing-page');
+        const appContainer = document.getElementById('app-container');
+        const hbdAudio = document.getElementById('hbd-audio');
+        const swiperWrapper = document.getElementById('swiper-wrapper');
+
+        let currentTrack = null;
+
+        playBtn.addEventListener('click', () => {
+            hbdAudio.play().catch(e => console.log("Audio play failed:", e));
+            playBtn.classList.add('hidden');
+            loginSection.classList.remove('hidden');
+        });
+
+        enterBtn.addEventListener('click', checkName);
+        nameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkName();
+        });
+
+        function checkName() {
+            if (nameInput.value.trim().toLowerCase() === HER_NAME.toLowerCase()) {
+                startExperience();
+            } else {
+                errorMsg.style.display = "block";
+            }
+        }
+
+        function startExperience() {
+            landingPage.classList.add('hidden');
+            appContainer.classList.remove('hidden');
+            hbdAudio.pause();
+            hbdAudio.currentTime = 0;
+
+            memoryData.forEach((item, index) => {
+                const slideHTML = `
+                    <div class="swiper-slide">
+                        <div class="slide-counter">${index + 1} / 19</div>
+                        <div class="image-container">
+                            <img src="${item.img}" alt="Memory ${index + 1}">
+                        </div>
+                        <div class="text-card">
+                            <p>${item.text}</p>
+                        </div>
+                    </div>
+                `;
+                swiperWrapper.innerHTML += slideHTML;
+            });
+
+            const swiper = new Swiper('.mySwiper', {
+                effect: 'cards', 
+                grabCursor: true,
+                on: {
+                    init: function () {
+                        playSlideAudio(0); 
+                    },
+                    slideChange: function () {
+                        playSlideAudio(this.activeIndex); 
+                    }
+                }
+            });
+        }
+
+        function playSlideAudio(index) {
+            if (currentTrack) {
+                currentTrack.pause();
+                currentTrack.currentTime = 0;
+            }
+            const audioFile = memoryData[index].audio;
+            currentTrack = new Audio(audioFile);
+            currentTrack.play().catch(e => console.log("Auto-play prevented by browser for slide " + index, e));
+        }
+    </script>
+</body>
+</html>
